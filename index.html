@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Əlavə Edilmiş Funksionallıqlar</title>
+    <title>Yunis'in Saytı</title>
     <style>
+        /* Ümumi Stil */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: url('background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
         }
 
         /* Navbar */
@@ -18,8 +20,8 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #333;
-            color: #fff;
+            background-color: rgba(51, 51, 51, 0.9);
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -46,7 +48,7 @@
             margin-left: -3px;
         }
 
-        .navbar .buttons button, 
+        .navbar .buttons button,
         .navbar .buttons span {
             background-color: #007BFF;
             color: white;
@@ -56,77 +58,97 @@
             cursor: pointer;
         }
 
-        /* Şəkillər Grid */
-        .image-grid {
+        /* Şəkillər */
+        .main-images {
+            max-width: 1500px;
+            margin: 100px auto;
+        }
+
+        .main-images img {
+            display: block;
+            width: 100%;
+            margin: 0;
+        }
+
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 120px auto 20px;
-            max-width: 1200px;
+            gap: 20px;
+            max-width: 1500px;
+            margin: 50px auto;
         }
 
-        .image-grid div {
+        .grid-container .grid-item {
             position: relative;
-            overflow: hidden;
         }
 
-        .image-grid img {
+        .grid-container img {
             width: 100%;
-            display: block;
-            transition: all 0.3s ease;
+            height: auto;
+            border-radius: 10px;
+            transition: 0.3s;
         }
 
-        .image-grid div:hover img {
-            filter: brightness(0.5);
-        }
-
-        .image-grid div button {
+        .grid-container .overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-            background-color: #007BFF;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
             color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .grid-container .overlay button {
+            background-color: #007BFF;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        .image-grid div:hover button {
-            display: block;
+        .grid-container .grid-item:hover img {
+            filter: brightness(50%);
         }
 
-        /* "+" Düyməsi */
+        .grid-container .grid-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* + İşarəsi və Modal */
+        .add-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+
         .add-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .add-button button {
-            font-size: 24px;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
             background-color: #007BFF;
             color: white;
             border: none;
-            padding: 10px 20px;
             border-radius: 50%;
             cursor: pointer;
         }
 
-        /* Modal */
         .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1001;
+            z-index: 2000;
         }
 
         .modal.active {
@@ -134,39 +156,35 @@
         }
 
         .modal-content {
-            background-color: white;
+            background: white;
             padding: 20px;
             border-radius: 10px;
             width: 400px;
-            max-width: 90%;
+        }
+
+        .modal-content h2 {
+            text-align: center;
         }
 
         .modal-content input,
-        .modal-content select {
+        .modal-content select,
+        .modal-content button {
             width: 100%;
             margin: 10px 0;
-            padding: 8px;
-            border: 1px solid #ccc;
+            padding: 10px;
             border-radius: 5px;
+            border: 1px solid #ccc;
         }
 
         .modal-content button {
             background-color: #007BFF;
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 5px;
             cursor: pointer;
         }
 
         .modal-content button:hover {
             background-color: #0056b3;
-        }
-
-        .modal-content textarea {
-            width: 100%;
-            height: 60px;
-            resize: none;
         }
     </style>
 </head>
@@ -176,68 +194,73 @@
         <div class="search">
             <input type="text" placeholder="Search...">
         </div>
-        <div class="buttons">
-            <button>Sign In</button>
-            <button>Sign Up</button>
+        <div class="buttons" id="auth-buttons">
+            <button id="sign-in-btn">Sign In</button>
+            <button id="sign-up-btn">Sign Up</button>
         </div>
     </div>
 
-    <!-- Şəkillər -->
-    <div class="image-grid">
-        <div>
-            <img src="1ci.png" alt="Image 1">
-            <button onclick="scrollToBottom()">Explore</button>
-        </div>
-        <div>
-            <img src="2ci.png" alt="Image 2">
-            <button onclick="scrollToBottom()">Explore</button>
-        </div>
-        <div>
-            <img src="3cw.png" alt="Image 3">
-            <button onclick="scrollToBottom()">Explore</button>
-        </div>
-        <!-- Digər şəkillər də eyni qaydada davam edir -->
+    <!-- Əsas Şəkillər -->
+    <div class="main-images">
+        <img src="11.png" alt="Şəkil 1">
+        <img src="12.png" alt="Şəkil 2">
+        <img src="13.png" alt="Şəkil 3">
     </div>
 
-    <!-- "+" Düyməsi -->
-    <div class="add-button">
-        <button onclick="openModal()">+</button>
+    <!-- Grid Şəkillər -->
+    <div class="grid-container">
+        <div class="grid-item">
+            <img src="1ci.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="2ci.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="3cw.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
+        <!-- 4-9 şəkillər buraya əlavə edilir -->
+    </div>
+
+    <!-- + İşarəsi -->
+    <div class="add-container">
+        <button class="add-button" onclick="openModal()">+</button>
     </div>
 
     <!-- Modal -->
-    <div class="modal" id="modal">
+    <div class="modal" id="addModal">
         <div class="modal-content">
-            <h2>Model Əlavə Et</h2>
-            <input type="file" accept="image/*" placeholder="Şəkil Yüklə">
-            <input type="file" accept=".blend,.obj,.fbx" placeholder="3D Faylı Yüklə">
-            <textarea placeholder="Açıqlama"></textarea>
+            <h2>Yeni Model Əlavə Et</h2>
+            <input type="file" placeholder="Şəkil Seçin">
+            <input type="file" placeholder="3D Faylı Seçin">
+            <input type="text" placeholder="Model Adı">
+            <input type="text" placeholder="Açıqlama">
             <select>
-                <option>CHARACTERS & CREATURES</option>
-                <option>CARS & VEHICLES</option>
-                <option>WEAPONS & MILITARY</option>
-                <option>3D SCANS</option>
-                <option>HANDPAINTED</option>
-                <option>PBR</option>
-                <option>MEDIEVAL FANTASY</option>
-                <option>ELECTRONICS & GADGETS</option>
-                <option>ROBOTS</option>
+                <option value="CHARACTERS">CHARACTERS & CREATURES</option>
+                <!-- Add other categories -->
             </select>
-            <input type="number" max="10" placeholder="Qiymət (max $10)">
-            <button>Paylaş</button>
+            <input type="number" max="10" placeholder="Qiymət (max 10$)">
+            <button>Share</button>
         </div>
     </div>
 
     <script>
+        // Modal açma
+        function openModal() {
+            document.getElementById('addModal').classList.add('active');
+        }
+
+        // Səhifənin sonuna getmək
         function scrollToBottom() {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-
-        function openModal() {
-            document.getElementById('modal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
         }
     </script>
 </body>
