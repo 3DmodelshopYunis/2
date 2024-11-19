@@ -45,7 +45,7 @@
         .navbar .buttons {
             display: flex;
             gap: 10px;
-            margin-left: -3px;
+            margin-left: -9px; /* Düymələri 9px sola çəkirik */
         }
 
         .navbar .buttons button,
@@ -70,6 +70,7 @@
             margin: 0;
         }
 
+        /* Grid Şəkillər */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -186,6 +187,25 @@
         .modal-content button:hover {
             background-color: #0056b3;
         }
+
+        /* Model list */
+        .model-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .model-item {
+            width: 200px;
+            text-align: center;
+        }
+
+        .model-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -195,16 +215,16 @@
             <input type="text" placeholder="Search...">
         </div>
         <div class="buttons" id="auth-buttons">
-            <button id="sign-in-btn">Sign In</button>
-            <button id="sign-up-btn">Sign Up</button>
+            <button id="sign-in-btn" onclick="openSignIn()">Sign In</button>
+            <button id="sign-up-btn" onclick="openSignUp()">Sign Up</button>
         </div>
     </div>
 
     <!-- Əsas Şəkillər -->
     <div class="main-images">
-        <img src="11.png" alt="Şəkil 1">
-        <img src="12.png" alt="Şəkil 2">
-        <img src="13.png" alt="Şəkil 3">
+        <img src="1ci.png" alt="Şəkil 1">
+        <img src="2ci.png" alt="Şəkil 2">
+        <img src="3cw.png" alt="Şəkil 3">
     </div>
 
     <!-- Grid Şəkillər -->
@@ -227,7 +247,42 @@
                 <button onclick="scrollToBottom()">Explore</button>
             </div>
         </div>
-        <!-- 4-9 şəkillər buraya əlavə edilir -->
+        <div class="grid-item">
+            <img src="4cw.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="5ci.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="6ci.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="7ci.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="8ci.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="9cu.png" alt="Şəkil">
+            <div class="overlay">
+                <button onclick="scrollToBottom()">Explore</button>
+            </div>
+        </div>
     </div>
 
     <!-- + İşarəsi -->
@@ -238,29 +293,48 @@
     <!-- Modal -->
     <div class="modal" id="addModal">
         <div class="modal-content">
-            <h2>Yeni Model Əlavə Et</h2>
-            <input type="file" placeholder="Şəkil Seçin">
-            <input type="file" placeholder="3D Faylı Seçin">
-            <input type="text" placeholder="Model Adı">
-            <input type="text" placeholder="Açıqlama">
-            <select>
-                <option value="CHARACTERS">CHARACTERS & CREATURES</option>
-                <!-- Add other categories -->
-            </select>
-            <input type="number" max="10" placeholder="Qiymət (max 10$)">
-            <button>Share</button>
+            <h2>Şəkil Əlavə Et</h2>
+            <form>
+                <input type="text" placeholder="Ad" required>
+                <select>
+                    <option value="1ci">1ci</option>
+                    <option value="2ci">2ci</option>
+                    <option value="3cw">3cw</option>
+                    <option value="4cw">4cw</option>
+                    <option value="5ci">5ci</option>
+                    <option value="6ci">6ci</option>
+                    <option value="7ci">7ci</option>
+                    <option value="8ci">8ci</option>
+                    <option value="9cu">9cu</option>
+                </select>
+                <button type="submit" onclick="closeModal()">Əlavə Et</button>
+            </form>
         </div>
     </div>
 
     <script>
-        // Modal açma
+        // Modal Açmaq
         function openModal() {
             document.getElementById('addModal').classList.add('active');
         }
 
-        // Səhifənin sonuna getmək
+        // Modal Bağlamaq
+        function closeModal() {
+            document.getElementById('addModal').classList.remove('active');
+        }
+
+        // Scroll to bottom
         function scrollToBottom() {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+        }
+
+        // Sign in və Sign up açma funksiyaları
+        function openSignIn() {
+            alert("Sign In funksiyası işləmir.");
+        }
+
+        function openSignUp() {
+            alert("Sign Up funksiyası işləmir.");
         }
     </script>
 </body>
