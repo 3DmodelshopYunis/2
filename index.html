@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Şəkillərin Sıralanması və Navbar</title>
+    <title>Əlavə Edilmiş Funksionallıqlar</title>
     <style>
-        /* Ümumi stil */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -13,7 +12,7 @@
             background-color: #f4f4f4;
         }
 
-        /* Navbar stili */
+        /* Navbar */
         .navbar {
             position: fixed;
             top: 0;
@@ -44,7 +43,7 @@
         .navbar .buttons {
             display: flex;
             gap: 10px;
-            margin-left: -3px; /* Düymələri 3px sola yerləşdirmək üçün */
+            margin-left: -3px;
         }
 
         .navbar .buttons button, 
@@ -57,11 +56,66 @@
             cursor: pointer;
         }
 
-        .navbar .buttons button:hover {
-            background-color: #0056b3;
+        /* Şəkillər Grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 120px auto 20px;
+            max-width: 1200px;
         }
 
-        /* Modal stili */
+        .image-grid div {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-grid img {
+            width: 100%;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .image-grid div:hover img {
+            filter: brightness(0.5);
+        }
+
+        .image-grid div button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .image-grid div:hover button {
+            display: block;
+        }
+
+        /* "+" Düyməsi */
+        .add-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .add-button button {
+            font-size: 24px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* Modal */
         .modal {
             position: fixed;
             top: 0;
@@ -83,11 +137,12 @@
             background-color: white;
             padding: 20px;
             border-radius: 10px;
-            width: 300px;
-            text-align: center;
+            width: 400px;
+            max-width: 90%;
         }
 
-        .modal-content input {
+        .modal-content input,
+        .modal-content select {
             width: 100%;
             margin: 10px 0;
             padding: 8px;
@@ -108,22 +163,10 @@
             background-color: #0056b3;
         }
 
-        /* Şəkil konteyneri */
-        .image-container {
-            margin-top: 80px; /* Navbarın altına boşluq */
-            display: flex;
-            flex-direction: column;
-            gap: 0px;
-            max-width: 1500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        img {
+        .modal-content textarea {
             width: 100%;
-            max-width: 1500px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
+            height: 60px;
+            resize: none;
         }
     </style>
 </head>
@@ -133,95 +176,68 @@
         <div class="search">
             <input type="text" placeholder="Search...">
         </div>
-        <div class="buttons" id="auth-buttons">
-            <button id="sign-in-btn">Sign In</button>
-            <button id="sign-up-btn">Sign Up</button>
-        </div>
-    </div>
-
-    <!-- Modal Pəncərə -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <h2 id="modal-title">Sign In</h2>
-            <input type="email" id="email" placeholder="Gmail" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <input type="text" id="nickname" placeholder="Nickname" required>
-            <button id="modal-submit">Submit</button>
+        <div class="buttons">
+            <button>Sign In</button>
+            <button>Sign Up</button>
         </div>
     </div>
 
     <!-- Şəkillər -->
-    <div class="image-container">
-        <img src="11.png" alt="Şəkil 1">
-        <img src="12.png" alt="Şəkil 2">
-        <img src="13.png" alt="Şəkil 3">
+    <div class="image-grid">
+        <div>
+            <img src="1ci.png" alt="Image 1">
+            <button onclick="scrollToBottom()">Explore</button>
+        </div>
+        <div>
+            <img src="2ci.png" alt="Image 2">
+            <button onclick="scrollToBottom()">Explore</button>
+        </div>
+        <div>
+            <img src="3cw.png" alt="Image 3">
+            <button onclick="scrollToBottom()">Explore</button>
+        </div>
+        <!-- Digər şəkillər də eyni qaydada davam edir -->
+    </div>
+
+    <!-- "+" Düyməsi -->
+    <div class="add-button">
+        <button onclick="openModal()">+</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>Model Əlavə Et</h2>
+            <input type="file" accept="image/*" placeholder="Şəkil Yüklə">
+            <input type="file" accept=".blend,.obj,.fbx" placeholder="3D Faylı Yüklə">
+            <textarea placeholder="Açıqlama"></textarea>
+            <select>
+                <option>CHARACTERS & CREATURES</option>
+                <option>CARS & VEHICLES</option>
+                <option>WEAPONS & MILITARY</option>
+                <option>3D SCANS</option>
+                <option>HANDPAINTED</option>
+                <option>PBR</option>
+                <option>MEDIEVAL FANTASY</option>
+                <option>ELECTRONICS & GADGETS</option>
+                <option>ROBOTS</option>
+            </select>
+            <input type="number" max="10" placeholder="Qiymət (max $10)">
+            <button>Paylaş</button>
+        </div>
     </div>
 
     <script>
-        const modal = document.getElementById('modal');
-        const modalTitle = document.getElementById('modal-title');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const nicknameInput = document.getElementById('nickname');
-        const modalSubmit = document.getElementById('modal-submit');
-        const authButtons = document.getElementById('auth-buttons');
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
 
-        let user = null;
+        function openModal() {
+            document.getElementById('modal').classList.add('active');
+        }
 
-        // Modal açma
-        document.getElementById('sign-in-btn').addEventListener('click', () => {
-            modalTitle.textContent = 'Sign In';
-            modal.classList.add('active');
-        });
-
-        document.getElementById('sign-up-btn').addEventListener('click', () => {
-            modalTitle.textContent = 'Sign Up';
-            modal.classList.add('active');
-        });
-
-        // Modal bağlama və qeydiyyat
-        modalSubmit.addEventListener('click', () => {
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-            const nickname = nicknameInput.value.trim();
-
-            if (email && password && nickname) {
-                user = { email, password, nickname };
-                updateAuthButtons();
-                modal.classList.remove('active');
-                emailInput.value = '';
-                passwordInput.value = '';
-                nicknameInput.value = '';
-            } else {
-                alert('Bütün sahələri doldurun!');
-            }
-        });
-
-        // Giriş düymələrini yeniləmə
-        function updateAuthButtons() {
-            if (user) {
-                authButtons.innerHTML = `
-                    <span>Welcome, ${user.nickname}</span>
-                    <button id="sign-out-btn">Sign Out</button>
-                `;
-                document.getElementById('sign-out-btn').addEventListener('click', () => {
-                    user = null;
-                    updateAuthButtons();
-                });
-            } else {
-                authButtons.innerHTML = `
-                    <button id="sign-in-btn">Sign In</button>
-                    <button id="sign-up-btn">Sign Up</button>
-                `;
-                document.getElementById('sign-in-btn').addEventListener('click', () => {
-                    modalTitle.textContent = 'Sign In';
-                    modal.classList.add('active');
-                });
-                document.getElementById('sign-up-btn').addEventListener('click', () => {
-                    modalTitle.textContent = 'Sign Up';
-                    modal.classList.add('active');
-                });
-            }
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
         }
     </script>
 </body>
